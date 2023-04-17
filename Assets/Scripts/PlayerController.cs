@@ -48,20 +48,23 @@ public class PlayerController : MonoBehaviour
     private void HorizontalMovement()
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
-        if (speed < 0)
+        if ((speed < maxSpeed) && (speed > -maxSpeed) && (horizontalInput != 0))
         {
-            speed = 0;
+            speed = speed + horizontalInput * acceleration * Time.deltaTime;
         }
-        if ((speed < maxSpeed) && (horizontalInput != 0))
+        else if (horizontalInput == 0)
         {
-            speed = speed + acceleration * Time.deltaTime;
-        }
-        else if ((speed > 0) && (horizontalInput == 0))
-        {
-            speed = speed - acceleration * Time.deltaTime;
+            if (speed > 0)
+            {
+                speed = speed - acceleration * Time.deltaTime;
+            }
+            if (speed < 0)
+            {
+                speed = speed + acceleration * Time.deltaTime;
+            }
         }
 
-            rb.velocity = new Vector3(horizontalInput * speed, rb.velocity.y, 0);
+            rb.velocity = new Vector3(speed, rb.velocity.y, 0);
     }
 
     private void GroundedMovement()
