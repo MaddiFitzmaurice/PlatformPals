@@ -43,6 +43,7 @@ public class PlatformManager : MonoBehaviour
 
     public void HandleLevelEditorMode(bool isActive)
     {
+        Debug.Log(isActive);
         Cursor.visible = isActive;
         _isLevelEditorActive = isActive;
         _platformOutline.SetActive(isActive);

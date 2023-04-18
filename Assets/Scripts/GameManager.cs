@@ -13,6 +13,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlatformManager _platformManager;
     [SerializeField] private int _nextLevel;
 
+    public void Start()
+    {
+        _platformManager.HandleLevelEditorMode(true);
+    }
+
     // Handle when players enter or leave the start area
     public void HandleAreaTrigger(int player, bool isInArea, AreaTrigger.AreaType type)
     {
@@ -29,11 +34,13 @@ public class GameManager : MonoBehaviour
         if (_isPlayer1InArea && type == AreaTrigger.AreaType.StartArea) //&& _isPlayer2StartArea)
         {
             _platformManager.HandleLevelEditorMode(true);
+            Debug.Log("LevelEditorOn");
         }
         // If one player is not in starting area, turn off level editor
         else if (!_isPlayer1InArea && type == AreaTrigger.AreaType.StartArea) //|| !_isPlayer2StartArea)
         {
             _platformManager.HandleLevelEditorMode(false);
+            Debug.Log("LevelEditorOff");
         }
 
         // If both players are in the end area
@@ -45,8 +52,6 @@ public class GameManager : MonoBehaviour
 
     void ChangeLevel()
     {
-        Debug.Log(_nextLevel);
-
         if (_nextLevel <= SceneManager.sceneCountInBuildSettings)
         {
             SceneManager.LoadScene(_nextLevel - 1);

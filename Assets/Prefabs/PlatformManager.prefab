@@ -104,6 +104,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlatformOutline
       objectReference: {fileID: 0}
+    - target: {fileID: 7357198346518472661, guid: ae08dc30c36642a408358180b4a66f48, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
