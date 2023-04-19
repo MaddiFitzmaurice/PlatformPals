@@ -34,13 +34,11 @@ public class GameManager : MonoBehaviour
         if (_isPlayer1InArea && type == AreaTrigger.AreaType.StartArea) //&& _isPlayer2StartArea)
         {
             _platformManager.HandleLevelEditorMode(true);
-            Debug.Log("LevelEditorOn");
         }
         // If one player is not in starting area, turn off level editor
         else if (!_isPlayer1InArea && type == AreaTrigger.AreaType.StartArea) //|| !_isPlayer2StartArea)
         {
             _platformManager.HandleLevelEditorMode(false);
-            Debug.Log("LevelEditorOff");
         }
 
         // If both players are in the end area

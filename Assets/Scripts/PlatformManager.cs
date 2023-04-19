@@ -11,12 +11,14 @@ public class PlatformManager : MonoBehaviour
 
     private List<GameObject> _platforms; 
     private bool _isLevelEditorActive;
+    private SpriteRenderer _outlineRenderer;
 
     void Start()
     {
         _platforms = ObjectPooler.CreateObjectPool(_maxPlatforms, _platformPrefab);
         ObjectPooler.AssignParentGroup(_platforms, this.transform);
         _platformOutline.SetActive(true);
+        _outlineRenderer = _platformOutline.GetComponent<SpriteRenderer>();
         _isLevelEditorActive = true;
     }
 
@@ -25,7 +27,19 @@ public class PlatformManager : MonoBehaviour
         if (_isLevelEditorActive)
         {
             // Show placement outline
-            _platformOutline.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0, 0, 1f);
+            _platformOutline.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition)
+                + new Vector3(0, 0, 1f);
+            
+            // If pool is empty, show red outline to indicate no more platforms left
+            if (ObjectPooler.IsPoolEmpty(_platforms))
+            {
+                _outlineRenderer.color = Color.red;
+            }
+            // Show green
+            else 
+            {
+                _outlineRenderer.color = Color.green;
+            }
 
             // Place platform on left click
             if (Input.GetMouseButtonDown(0))
@@ -43,7 +57,6 @@ public class PlatformManager : MonoBehaviour
 
     public void HandleLevelEditorMode(bool isActive)
     {
-        Debug.Log(isActive);
         Cursor.visible = isActive;
         _isLevelEditorActive = isActive;
         _platformOutline.SetActive(isActive);

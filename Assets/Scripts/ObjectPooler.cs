@@ -53,4 +53,17 @@ public static class ObjectPooler
             pooledObjects[i].transform.parent = parent;
         }
     }
+
+    public static bool IsPoolEmpty(List<GameObject> pooledObjects)
+    {
+        foreach (GameObject obj in pooledObjects)
+        {
+            if (!obj.activeInHierarchy)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
