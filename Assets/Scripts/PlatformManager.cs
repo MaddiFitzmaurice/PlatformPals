@@ -71,7 +71,7 @@ public class PlatformManager : MonoBehaviour
         {
             // Grab mouse pos and add 1 to z so platform is behind clipping plane
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePos.z += 1;
+            mousePos.z = 0;
 
             // Spawn platform
             platform.transform.position = mousePos;
