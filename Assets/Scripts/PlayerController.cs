@@ -5,31 +5,59 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     //Component Declaration
-    [SerializeField] private Rigidbody rb;
+    [SerializeField]
+    private Rigidbody rb;
 
     //Input Declaration
-    private float horizontalInput;
+    [SerializeField]
+    private string movementInput;
+    private float horizontalMovement;
+    [SerializeField]
+    private string jumpInput;
+    private float verticalMovement;
 
     //Object State Declaration
+    public bool isGrounded;
+    public bool isFalling;
     public bool canJump;
     public bool attemptJump;
-    public bool grounded;
     public bool isFacingRight;
+    public bool isMovingRight;
 
     //Check Declaration
-    [SerializeField] private Transform feet;
+    [SerializeField]
+    private Transform feet;
     private float timeOffGround;
-    [SerializeField] private float coyoteTime;
 
     //Layer Declaration
-    [SerializeField] private LayerMask groundLayer;
+    [SerializeField]
+    private LayerMask groundLayer;
 
     //Player Stat Declaration
-    [SerializeField] private float groundSpeed;
-    [SerializeField] private float airSpeed;
-    [SerializeField] private float acceleration;
-    [SerializeField] private float deceleration;
-    [SerializeField] private float jumpForce;
+    [SerializeField]
+    private float coyoteTime;
+    [SerializeField]
+    private float walkSpeed;
+    [SerializeField]
+    private float fallSpeed;
+    [SerializeField]
+    private float acceleration;
+    [SerializeField]
+    private float deceleration;
+    [SerializeField]
+    private float airAcceleration;
+    [SerializeField]
+    private float airDeceleration;
+    [SerializeField] 
+    private float velocityPower;
+    [SerializeField]
+    private float jumpForce;
+    [SerializeField]
+    private float gravity;
+    [SerializeField]
+    private float gravityScale;
+    [SerializeField]
+    private float terminalVelocity;
 
     private void Awake()
     {
@@ -43,27 +71,40 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
+        horizontalMovement = Input.GetAxisRaw(movementInput);
+        verticalMovement = Input.GetAxis(jumpInput);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (verticalMovement > 0)
         {
             attemptJump = true;
-            
         }
-        
-        if (Input.GetKeyUp(KeyCode.Space))
+        else
         {
             attemptJump = false;
         }
 
         if (Physics.Raycast(feet.position, -Vector2.up, 0.1f, groundLayer))
         {
-            grounded = true;
+            isGrounded = true;
             canJump = true;
         }
         else
         {
-            grounded = false;
+            isGrounded = false;
+        }
+
+        if(!isGrounded)
+        {
+            timeOffGround += Time.deltaTime;
+        }
+        else
+        {
+            timeOffGround = 0;
+        }
+
+        if (timeOffGround >= coyoteTime)
+        {
+            canJump = false;
         }
     }
 
@@ -71,42 +112,45 @@ public class PlayerController : MonoBehaviour
     {
         Move();
 
-        if ((attemptJump) && (canJump))
+        Gravity();
+
+        if ((canJump) && (attemptJump))
         {
             Jump();
         }
+    }
 
-        if ((!attemptJump) && (!grounded))
+    public void Move()
+    {
+        float targetVelocity = walkSpeed* horizontalMovement;
+
+        float velocityDifference = targetVelocity - rb.velocity.x;
+
+        float accelerationRate = (Mathf.Abs(targetVelocity) > 0.1f) ? acceleration : deceleration;
+
+        if (!isGrounded)
         {
-            //CutJump();
+            accelerationRate = (Mathf.Abs(targetVelocity) > 0.1f) ? airAcceleration : airDeceleration;
         }
+
+        float movement = Mathf.Pow(Mathf.Abs(velocityDifference) * accelerationRate, velocityPower) * Mathf.Sign(velocityDifference);
+
+        rb.AddForce(movement * Vector3.right);
     }
 
     public void Jump()
     {
         rb.AddForce(jumpForce * Vector3.up, ForceMode.Impulse);
         canJump = false;
-        timeOffGround = 0f;
+        timeOffGround = coyoteTime;
     }
 
-    public void Move()
+    public void Gravity()
     {
-        float targetVelocity;
-        if (grounded)
+        if (rb.velocity.y > -terminalVelocity)
         {
-            targetVelocity = groundSpeed * horizontalInput;
+            Vector3 downForce = gravity * gravityScale * Vector3.down;
+            rb.AddForce(downForce, ForceMode.Acceleration);
         }
-        else
-        {
-            targetVelocity = airSpeed * horizontalInput;
-        }
-
-        float velocityDifference = targetVelocity - rb.velocity.x;
-
-        float accelerationRate = (Mathf.Abs(targetVelocity) > 0.01f) ? acceleration : deceleration;
-
-        float movement = Mathf.Abs(velocityDifference) * acceleration * Mathf.Sign(velocityDifference);
-
-        rb.AddForce(movement * Vector3.right);
     }
 }
