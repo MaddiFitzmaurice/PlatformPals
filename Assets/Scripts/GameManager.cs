@@ -25,24 +25,24 @@ public class GameManager : MonoBehaviour
         {
             _isPlayer1InArea = isInArea;
         }
-        //else if (player == 2)
-        //{
-            //_isPlayer2StartArea = isInArea;
-        //}
+        else if (player == 2)
+        {
+            _isPlayer2InArea = isInArea;
+        }
 
         // If both players are in starting area, turn on level editor
-        if (_isPlayer1InArea && type == AreaTrigger.AreaType.StartArea) //&& _isPlayer2StartArea)
+        if (_isPlayer1InArea && type == AreaTrigger.AreaType.StartArea && _isPlayer2InArea)
         {
             _platformManager.HandleLevelEditorMode(true);
         }
         // If one player is not in starting area, turn off level editor
-        else if (!_isPlayer1InArea && type == AreaTrigger.AreaType.StartArea) //|| !_isPlayer2StartArea)
+        else if (!_isPlayer1InArea && type == AreaTrigger.AreaType.StartArea || !_isPlayer2InArea)
         {
             _platformManager.HandleLevelEditorMode(false);
         }
 
         // If both players are in the end area
-        if (_isPlayer1InArea && type == AreaTrigger.AreaType.EndArea)
+        if (_isPlayer1InArea && _isPlayer2InArea && type == AreaTrigger.AreaType.EndArea)
         {
             ChangeLevel();
         }

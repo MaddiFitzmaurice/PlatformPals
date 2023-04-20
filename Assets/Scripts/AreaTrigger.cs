@@ -20,7 +20,7 @@ public class AreaTrigger : MonoBehaviour
         }
         else if (other.CompareTag("Player2"))
         {
-            //_gameManager.HandleAreaTrigger(2, true, _areaType);
+            _gameManager.HandleAreaTrigger(2, true, _areaType);
         }
     }
 
@@ -32,7 +32,7 @@ public class AreaTrigger : MonoBehaviour
         }
         else if (other.CompareTag("Player2"))
         {
-            //_gameManager.HandleAreaTrigger(2, false, _areaType);
+            _gameManager.HandleAreaTrigger(2, false, _areaType);
         }
     }
 }
