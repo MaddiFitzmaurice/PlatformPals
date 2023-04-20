@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -21,8 +22,8 @@ public class PlayerController : MonoBehaviour
     public bool isFalling;
     public bool canJump;
     public bool attemptJump;
-    public bool isFacingRight;
-    public bool isMovingRight;
+    public bool isMovingRight = true;
+    public bool isFacingRight = true;
 
     //Check Declaration
     [SerializeField]
@@ -32,6 +33,9 @@ public class PlayerController : MonoBehaviour
     //Layer Declaration
     [SerializeField]
     private LayerMask groundLayer;
+
+    //animator Declaration
+    public Animator anim;
 
     //Player Stat Declaration
     [SerializeField]
@@ -106,6 +110,23 @@ public class PlayerController : MonoBehaviour
         {
             canJump = false;
         }
+
+        if (horizontalMovement > 0.5f)
+        {
+            isMovingRight= false;
+        }
+        else if (horizontalMovement < -0.5f)
+        {
+            isMovingRight = true;
+        }
+
+        if (isMovingRight != isFacingRight)
+        {
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            isFacingRight = !isFacingRight;
+        }
+
+        Debug.Log(horizontalMovement);
     }
 
     private void FixedUpdate()
