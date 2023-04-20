@@ -7,8 +7,10 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     // Flags 
-    private bool _isPlayer1InArea;
-    private bool _isPlayer2InArea;
+    private bool _isPlayer1StartArea;
+    private bool _isPlayer2StartArea;
+    private bool _isPlayer1EndArea;
+    private bool _isPlayer2EndArea;
 
     [SerializeField] private PlatformManager _platformManager;
     [SerializeField] private int _nextLevel;
@@ -21,28 +23,42 @@ public class GameManager : MonoBehaviour
     // Handle when players enter or leave the start area
     public void HandleAreaTrigger(int player, bool isInArea, AreaTrigger.AreaType type)
     {
-        if (player == 1)
+        if (type == AreaTrigger.AreaType.StartArea)
         {
-            _isPlayer1InArea = isInArea;
+            if (player == 1)
+            {
+                _isPlayer1StartArea = isInArea;
+            }
+            else if (player == 2)
+            {
+                _isPlayer2StartArea = isInArea;
+            }
         }
-        else if (player == 2)
+        else if (type == AreaTrigger.AreaType.EndArea)
         {
-            _isPlayer2InArea = isInArea;
+            if (player == 1)
+            {
+                _isPlayer1EndArea = isInArea;
+            }
+            else if (player == 2)
+            {
+                _isPlayer2EndArea = isInArea;
+            }
         }
 
         // If both players are in starting area, turn on level editor
-        if (_isPlayer1InArea && type == AreaTrigger.AreaType.StartArea && _isPlayer2InArea)
+        if (_isPlayer1StartArea && _isPlayer2StartArea)
         {
             _platformManager.HandleLevelEditorMode(true);
         }
         // If one player is not in starting area, turn off level editor
-        else if (!_isPlayer1InArea && type == AreaTrigger.AreaType.StartArea || !_isPlayer2InArea)
+        else if (!_isPlayer1StartArea || !_isPlayer2StartArea)
         {
             _platformManager.HandleLevelEditorMode(false);
         }
 
         // If both players are in the end area
-        if (_isPlayer1InArea && _isPlayer2InArea && type == AreaTrigger.AreaType.EndArea)
+        if (_isPlayer1EndArea && _isPlayer2EndArea)
         {
             ChangeLevel();
         }
