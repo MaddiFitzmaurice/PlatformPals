@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
     {
         if (_nextLevel <= SceneManager.sceneCountInBuildSettings)
         {
-            SceneManager.LoadScene(_nextLevel - 1);
+            SceneManager.LoadScene(_nextLevel);
         }
         else
         {

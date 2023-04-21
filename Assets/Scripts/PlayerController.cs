@@ -126,7 +126,7 @@ public class PlayerController : MonoBehaviour
             isFacingRight = !isFacingRight;
         }
 
-        Debug.Log(horizontalMovement);
+        //Debug.Log(horizontalMovement);
     }
 
     private void FixedUpdate()
