@@ -846,11 +846,19 @@ PrefabInstance:
     - target: {fileID: 9203278788216845477, guid: d0381a1c40429794ba0eb4e8934a4fa7, type: 3}
       propertyPath: player1
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1047340154}
     - target: {fileID: 9203278788216845477, guid: d0381a1c40429794ba0eb4e8934a4fa7, type: 3}
       propertyPath: player2
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 253277426}
+    - target: {fileID: 9203278788216845477, guid: d0381a1c40429794ba0eb4e8934a4fa7, type: 3}
+      propertyPath: P1RespawnPoint
+      value: 
+      objectReference: {fileID: 896355230}
+    - target: {fileID: 9203278788216845477, guid: d0381a1c40429794ba0eb4e8934a4fa7, type: 3}
+      propertyPath: P2RespawnPoint
+      value: 
+      objectReference: {fileID: 362731722}
     - target: {fileID: 9203278788216845479, guid: d0381a1c40429794ba0eb4e8934a4fa7, type: 3}
       propertyPath: m_Name
       value: OutOfBoundsSpike
