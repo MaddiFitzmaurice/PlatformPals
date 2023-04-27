@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 44097936536965152}
   - component: {fileID: 44097936536965153}
   - component: {fileID: 44097936536965155}
+  - component: {fileID: 6723642594103013077}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player1
@@ -177,12 +178,13 @@ MonoBehaviour:
   isFalling: 0
   canJump: 1
   attemptJump: 0
-  isFacingRight: 0
   isMovingRight: 0
+  isFacingRight: 0
   feet: {fileID: 8002839413820404089}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  anim: {fileID: 6723642594103013077}
   coyoteTime: 0.2
   walkSpeed: 7
   fallSpeed: 8
@@ -195,6 +197,26 @@ MonoBehaviour:
   gravity: 8
   gravityScale: 2
   terminalVelocity: 16
+--- !u!95 &6723642594103013077
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44097936536965162}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d6657093fac92b3409e956b4763b0999, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &9174615100821287309
 GameObject:
   m_ObjectHideFlags: 0

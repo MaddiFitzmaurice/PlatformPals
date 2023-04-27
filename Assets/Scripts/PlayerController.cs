@@ -126,7 +126,14 @@ public class PlayerController : MonoBehaviour
             isFacingRight = !isFacingRight;
         }
 
-        //Debug.Log(horizontalMovement);
+        if (horizontalMovement != 0)
+        {
+            anim.SetBool("walking", true);
+        }
+        else
+        {
+            anim.SetBool("walking", false);
+        }
     }
 
     private void FixedUpdate()
